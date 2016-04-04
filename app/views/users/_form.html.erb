@@ -1,0 +1,41 @@
+<%= form_for(user) do |f| %>
+
+  <%= hidden_field_tag :with_file, params[:with_file] %>
+
+  <% if user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+      <% user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :email %>
+    <%= f.text_field :email %>
+  </div>
+
+  <fieldset>
+    <legend>Restaurant</legend>
+    <%= f.fields_for :restaurant do |r| %>
+      <div class="field">
+        <%= r.label :name %>
+        <%= r.text_field :name %>
+      </div>
+      <% if params[:with_file] == '1' %>
+      <div class="field">
+        <%= r.label :logo %>
+        <%= r.file_field :logo %>
+      </div>
+      <% end %>
+    <% end %>
+  </fieldset>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
